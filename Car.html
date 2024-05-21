@@ -44,7 +44,7 @@
         var background = new Image();
         background.src = "background.jpg";
         var radar = document.getElementById("radar");
-        var carImage1, carImage2, carImage3, carImage4;
+        var carImage1, carImage2, carImage3, carImage4, carImage5;
 	  
         var radarX = canvas.width-120;
         var radarText = " "+radarX;
@@ -81,56 +81,58 @@
 			r:false
         };
 
+	     var car5 = {
+            img: carImage5,
+            x: 100,
+            y: 275,
+            speed: Math.floor(Math.random()*25+10),
+			r:false
+        };
+
+	    var cars = [car1, car2, car3, car4, car5];
+	    
         makeCar();
 		
         setInterval(moveCars, 100);
         function makeCar(){
-             carImage1 = new Image();
-             carImage2 = new Image();
-			 carImage3 = new Image();
-			 carImage4 = new Image();
-               
+             for (var i=0; i<cars.length; i++){
+		cars[i].=new Image();
+		cars[i].img.scr="car"+(i+1)+".png";  
+	     }  
 
+		// carImage1 = new Image();   list[i].=new Image();
+		// 			   list[i].img.scr="car"+(i+1)+".png";  
+		// carImage2 = new Image();
+		// carImage3 = new Image();
+		// carImage4 = new Image();
+		// carImage5 = new Image();
+		
                carImage1.src = "car1.png";
                carImage2.src = "car2.png";
-			   carImage3.src = "car3.png";
+		carImage3.src = "car3.png";
                carImage4.src = "car4.png";
              
             car1.img=carImage1;
             car2.img=carImage2;
-			car3.img=carImage3;
+	    car3.img=carImage3;
             car4.img=carImage4;
           
         }
         function moveCars() {
-            
-            car1.x += car1.speed;
-            car2.x += car2.speed;
-			car3.x += car3.speed;
-			car4.x += car4.speed;
-        
-			updateScreen(); 
-		   
-            startOver(car1);
-            startOver(car2);
-			startOver(car3);
-            startOver(car4);
-                
-            updateRadar(car1);
-            updateRadar(car2);
-			updateRadar(car3);
-            updateRadar(car4);
-		
-          
-        
+          for (var i=0; i<cars.length; i++){  
+            cars[i].x += cars[i].speed;
+	     updateScreen(); 
+             startOver(cars[i]);
+             updateRadar(cars[i]);
+	  }
+           
 		
         }
         function updateScreen(){
             ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-            ctx.drawImage(car1.img, car1.x, car1.y);
-            ctx.drawImage(car2.img, car2.x, car2.y); 
-			ctx.drawImage(car3.img, car3.x, car3.y);
-            ctx.drawImage(car4.img, car4.x, car4.y);			
+           for (var i=0; i<cars.length; i++){  
+		ctx.drawImage(cars[i].img, cars[i].x, cars[i].y);
+	   }
              radar.innerHTML = radarText;
         }
 
